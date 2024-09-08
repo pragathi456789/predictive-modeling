@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://127.0.0.1:5500/code.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Modeling with Linear Regression</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f7f7;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border: 1px solid #ddd;
+            display: block;
+            margin-bottom: 10px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Predictive Modeling with Linear Regression</h1>
+    <p>
+        Linear regression is a statistical method for modeling the relationship between a dependent variable (target) and one or more independent variables (features). In this example, we’ll walk through the steps to build and evaluate a linear regression model using Python's <strong>scikit-learn</strong> library.
+    </p>
+
+    <h2>Step 1: Importing Libraries</h2>
+    <p>First, we import the necessary Python libraries for data analysis, visualization, and machine learning.</p>
+    <pre><code>
+# Import necessary libraries
+import pandas as pd  # For data manipulation
+import numpy as np  # For numerical operations
+import matplotlib.pyplot as plt  # For visualization
+from sklearn.model_selection import train_test_split  # To split data
+from sklearn.linear_model import LinearRegression  # Linear regression model
+from sklearn.metrics import mean_squared_error, r2_score  # To evaluate the model
+    </code></pre>
+
+    <h2>Step 2: Loading the Dataset</h2>
+    <p>We load the dataset using pandas. Let’s assume the dataset is a CSV file containing features such as house size and price.</p>
+    <pre><code>
+# Load the dataset
+df = pd.read_csv('house_prices.csv')
+
+# Preview the dataset
+df.head()
+    </code></pre>
+
+    <h2>Step 3: Defining Features and Target</h2>
+    <p>We define the independent variable(s) (features) and the dependent variable (target). In this case, let’s predict the house price based on the size of the house.</p>
+    <pre><code>
+# Define the feature (X) and target (y)
+X = df[['HouseSize']]  # Independent variable(s)
+y = df['Price']  # Dependent variable (target)
+    </code></pre>
+
+    <h2>Step 4: Splitting the Data</h2>
+    <p>We split the dataset into training and testing sets using <strong>train_test_split</strong>. The training set will be used to fit the model, and the testing set will be used to evaluate it.</p>
+    <pre><code>
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Check the shape of the datasets
+X_train.shape, X_test.shape
+    </code></pre>
+
+    <h2>Step 5: Training the Linear Regression Model</h2>
+    <p>We create an instance of the LinearRegression class and fit it to the training data.</p>
+    <pre><code>
+# Create a LinearRegression model
+lr_model = LinearRegression()
+
+# Train the model using the training data
+lr_model.fit(X_train, y_train)
+
+# Check the model coefficients (slope and intercept)
+print(f'Intercept: {lr_model.intercept_}')
+print(f'Coefficient: {lr_model.coef_}')
+    </code></pre>
+
+    <h2>Step 6: Making Predictions</h2>
+    <p>Once the model is trained, we can make predictions on the test set.</p>
+    <pre><code>
+# Predict the house prices for the test set
+y_pred = lr_model.predict(X_test)
+
+# Display the predicted values
+y_pred[:5]  # Show first 5 predictions
+    </code></pre>
+
+    <h2>Step 7: Evaluating the Model</h2>
+    <p>To evaluate how well the model performs, we calculate metrics such as the <strong>Mean Squared Error (MSE)</strong> and <strong>R-squared</strong>. These metrics help us understand the accuracy of the model’s predictions.</p>
+    <pre><code>
+# Calculate Mean Squared Error (MSE)
+mse = mean_squared_error(y_test, y_pred)
+print(f'Mean Squared Error: {mse}')
+
+# Calculate R-squared (coefficient of determination)
+r2 = r2_score(y_test, y_pred)
+print(f'R-squared: {r2}')
+    </code></pre>
+
+    <h2>Step 8: Visualizing the Results</h2>
+    <p>Finally, let’s visualize the relationship between the predicted and actual house prices using a scatter plot. A line of best fit will help us assess how well the model fits the data.</p>
+    <pre><code>
+# Scatter plot of actual vs predicted values
+plt.scatter(X_test, y_test, color='blue', label='Actual Prices')
+plt.plot(X_test, y_pred, color='red', linewidth=2, label='Predicted Prices')
+plt.title('Actual vs Predicted House Prices')
+plt.xlabel('House Size')
+plt.ylabel('Price')
+plt.legend()
+plt.show()
+    </code></pre>
+
+    <h2>Step 9: Conclusion</h2>
+    <p>In this example, we used linear regression to predict house prices based on the size of the house. By splitting the dataset into training and testing sets, we were able to train the model and evaluate its performance using the Mean Squared Error and R-squared values. The scatter plot shows how closely the predicted values match the actual values, giving us a visual representation of the model’s accuracy.</p>
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+</body></html>
